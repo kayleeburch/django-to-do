@@ -1,0 +1,10 @@
+{% extends 'page_layout.html' %}
+
+{% block content %}
+    <h1>Add Item to To-do list</h1>
+        <label for="item">To-do Title</label>
+        <input id="title" placeholder="Item Name">
+        <label for="item">To-do Body</label>
+        <input id="body" placeholder="Item Description">
+        <button onclick="add_item()">Add Item</button>
+{% endblock %}

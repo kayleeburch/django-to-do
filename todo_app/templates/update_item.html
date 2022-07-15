@@ -1,0 +1,14 @@
+{% extends 'page_layout.html' %}
+
+{% block content %}
+    <h1>Add Item to To-do list</h1>
+        <label for="item">New to-do Title</label>
+        <input id="title" placeholder="{{todo.title}}">
+        <br></br>
+        <label for="item">New to-do Body</label>
+        <input id="body" placeholder="{{todo.body}}">
+        <br></br>
+        <a href="http://localhost:8000/{{todo.id}}">
+            <button onclick="update_item()">Save Update</button>
+        </a>
+{% endblock %}

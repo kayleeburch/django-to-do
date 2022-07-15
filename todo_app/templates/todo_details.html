@@ -1,0 +1,17 @@
+{% extends 'page_layout.html' %}
+
+{% block content %}
+<h1> You are looking at item id number: {{todo.id}} </h1>
+    <label for="item">To-do Title</label>
+    <input id="title"value="{{todo.title}}">
+    <br></br>
+    <label for="item">To-do Body</label>
+    <input id="body" value="{{todo.body}}">
+    <br></br>
+    <a href="http://localhost:8000/{{todo.id}}/edit/">
+        <button type="button">Update To-do</button>
+    </a>
+    <a href="http://localhost:8000/{{todo.id}}/delete/">
+        <button>Delete To-Do</button>
+    </a>
+{% endblock %}

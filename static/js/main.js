@@ -13,7 +13,7 @@ function add_item() {
         .then((response) => {
             console.log('this is the response')
             console.log(response)
-            window.location.replace("http://localhost:8000/")
+            window.location.replace("http://localhost:8000/all_todos")
 
         })
         .catch((error) => {

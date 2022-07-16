@@ -1,18 +1,26 @@
 import re
 from django.shortcuts import render, HttpResponseRedirect
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from .models import Todo
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import AppUser as User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 @csrf_exempt
 def index(request):
+    if request.user.is_authenticated:
+        return render(request, 'index.html', {'user_email': request.user.email})
+    else:
+        return render(request, 'index.html')
+    
+    
+def all_todos(request):
     items = Todo.objects.all()
-    return render(request, 'index.html', {'items': items})
+    return render(request, 'all_todo.html', {'items': items})
+
 
 @csrf_exempt
 def signup(request):
@@ -51,7 +59,11 @@ def log_in(request):
                 return JsonResponse({'Success': False, 'reason': 'account disabled'})
         else:
             return JsonResponse({'Success': False, 'reason': 'user does not exist'})
-    
+
+def log_out(request):
+    logout(request)
+    return HttpResponseRedirect('http://localhost:8000/')
+   
 @csrf_exempt
 def add_item(request):
     print('function reached')

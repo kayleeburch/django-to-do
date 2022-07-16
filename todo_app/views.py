@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse
 from .models import Todo
@@ -5,6 +6,7 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import AppUser as User
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
 @csrf_exempt
@@ -14,7 +16,7 @@ def index(request):
 
 @csrf_exempt
 def signup(request):
-    print('hello!')
+    print('trying to signup')
     if request.method == 'GET':
             return render(request, 'sign_up.html')
     if request.method == 'POST':
@@ -26,6 +28,29 @@ def signup(request):
             print('oops!')
             print(str(e))
             return JsonResponse({'success': False})
+        
+@csrf_exempt     
+def log_in(request):
+    print('trying to login')
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        email = body['email']
+        password = body['password']
+        user = authenticate(username=email, password=password)
+        if user is not None:
+            if user.is_active:
+                try:
+                    login(request,user)
+                    print('logged in!')
+                    return JsonResponse({'Success': True})
+                except Exception as e:
+                    return JsonResponse({'Success': False, 'reason': 'login failed'})
+            else:
+                return JsonResponse({'Success': False, 'reason': 'account disabled'})
+        else:
+            return JsonResponse({'Success': False, 'reason': 'user does not exist'})
     
 @csrf_exempt
 def add_item(request):

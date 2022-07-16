@@ -4,12 +4,28 @@ from .models import Todo
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from .models import AppUser as User
 # Create your views here.
 
 @csrf_exempt
 def index(request):
     items = Todo.objects.all()
     return render(request, 'index.html', {'items': items})
+
+@csrf_exempt
+def signup(request):
+    print('hello!')
+    if request.method == 'GET':
+            return render(request, 'sign_up.html')
+    if request.method == 'POST':
+        try:
+            body = json.loads(request.body)
+            User.objects.create_user(username=body['email'], password=body['password'], email=body['email'])
+            return JsonResponse({'success': True})
+        except Exception as e:
+            print('oops!')
+            print(str(e))
+            return JsonResponse({'success': False})
     
 @csrf_exempt
 def add_item(request):

@@ -43,3 +43,24 @@ function update_item() {
         })
 
 }
+
+function signup() {
+    console.log('signup function called')
+    const email = document.getElementById('email').value
+    const password = document.getElementById('password').value
+
+    axios
+        .post('http://localhost:8000/signup/', {
+            email: email,
+            password: password
+        })
+        .then((response) => {
+            console.log('this is the response')
+            console.log(response)
+
+        })
+        .catch((error) => {
+            console.log('ERROR')
+            console.log(error)
+        })
+}

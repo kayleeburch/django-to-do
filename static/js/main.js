@@ -35,6 +35,7 @@ function update_item() {
         .then((response) => {
             console.log('this is the response')
             console.log(response)
+            window.location.replace("http://localhost:8000/all_todos/")
 
         })
         .catch((error) => {
@@ -78,6 +79,7 @@ function login() {
         .then((response) => {
             console.log('this is the response')
             console.log(response)
+            window.location.replace("http://localhost:8000/")
 
         })
         .catch((error) => {

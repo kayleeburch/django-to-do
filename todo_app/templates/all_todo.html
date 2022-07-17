@@ -2,17 +2,25 @@
 
 
 {% block content %}
-<h1>To-do Items</h1>
-<ul>
-    {% for item in items %}
-    <li>{{item.title}} - {{item.body}}
-        <a href="http://localhost:8000/{{item.id}}">
-            <button type="button">See To-Do Details</button>
-        </a>
-    </li> 
-    {% endfor %}
+<h1>To-do Items for {{user}}</h1>
+
+    {% if items|length == 0 %}
+        <h2>No items to display</h2>
+    {% else %}
+        <ul>
+        {% for item in items %}
+            <li>{{item.title}} - {{item.body}}
+                <a href="http://localhost:8000/{{item.id}}">
+                    <button type="button">See Details</button>
+                </a>
+            </li> 
+        {% endfor %}
+        </ul>
+    {% endif %}
     <a href="http://localhost:8000/new/">
         <button type="button">Add new To-Do Item</button>
     </a>
-</ul>
+    <a href="/">
+        <button type="button">Home</button>
+    </a>
 {% endblock %}
